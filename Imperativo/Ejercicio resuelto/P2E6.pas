@@ -2,7 +2,6 @@ program P2E6;
 
 procedure convertirABinario(num: Integer);
     begin
-        WriteLn(num);
         if (num < 2) then begin
             Write(num);            
         end else begin

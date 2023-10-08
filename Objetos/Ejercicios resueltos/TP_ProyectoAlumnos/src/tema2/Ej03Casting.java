@@ -13,27 +13,26 @@ public class Ej03Casting {
     public static void main(String[] arg){
         Persona[][] matriz = new Persona[5][8];
         int i = 0;
-        int j;
+        int j = 0;
         boolean seguir = true;
         System.out.println("Ingrese el nombre de la persona");
         String nombre = Lector.leerString();
-        for (i = 0; i < 5; i ++){
-            for (j = 0; j < 8; j++){
+        while ((seguir) && (i < 5)){
+            while ((seguir) && (j < 8)){
                 System.out.println("Ingrese el DNI");
                 int dni = Lector.leerInt();
                 System.out.println("Ingrese la edad");
                 int edad = Lector.leerInt();
                 matriz[i][j] = new Persona(nombre, dni, edad);
-                if (matriz[i][j].getNombre().equals("ZZZ")) {
+                j++;
+                if (nombre.equals("ZZZ")) {
                     seguir = false;
-                    break;
+                } else {
+                    System.out.println("Ingrese el nombre de la persona");
+                    nombre = Lector.leerString();
                 }
-                System.out.println("Ingrese el nombre de la persona");
-                nombre = Lector.leerString();
             }
-            if (!seguir){
-                break;
-            }
+            i++;
         }
         for (i = 0; i < 5; i++) {
             for (j = 0; j < 8; j++) {

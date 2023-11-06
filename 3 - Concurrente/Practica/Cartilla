@@ -1,0 +1,36 @@
+Programa nombre
+areas
+robots
+  robot tipo1
+  variables
+  comenzar
+  fin
+variables
+comenzar
+fin
+
+Iniciar(robot, posicion)
+derecha
+mover
+tomarFlor
+tomarPapel
+depositarFlor
+depositarPapel
+PosAv
+PosCa
+HayFlorEnLaEsquina
+HayPapelEnLaEsquina
+HayFlorEnLaBolsa
+HayPapelEnLaBolsa
+Pos(Av, Ca)
+Informar()
+Random(c, minimo, maximo)
+EnviarMensaje(dato, robot)
+RecibirMensaje(dato, robot)
+RecibirMensaje(dato, *)
+BloquearEsquina(Av, Ca)
+LiberarEsquina(Av, Ca)
+si (Condicion) | (Condicion2) & (Condicion3)
+sino
+mientras (Condicion)
+repetir variable

@@ -1,0 +1,80 @@
+programa P5E1
+procesos
+  proceso juntarFlores (ES cant: numero)
+  comenzar
+    mientras (HayFlorEnLaEsquina)
+      tomarFlor
+      cant:= cant + 1
+  fin
+  proceso juntarPapeles (ES cant: numero)
+  comenzar
+    mientras (HayPapelEnLaEsquina)
+      tomarPapel
+      cant:= cant + 1
+  fin
+areas
+  area1: AreaPC(2,1,2,100)
+  area2: AreaPC(3,1,3,100)
+  area3: AreaPC(1,98,100,98)
+  area4: AreaPC(1,99,100,99)
+  areaJ: AreaP(1,1,1,1)
+
+robots
+  robot juntador
+  variables
+    quien, cant: numero
+  comenzar
+    cant:= 0
+    RecibirMensaje(quien, fiscalizador)
+    si (quien = 3) | (quien = 4)
+      derecha
+    repetir 99
+      BloquearEsquina(PosAv,PosCa)
+      si (quien = 1) | (quien = 2)
+        juntarFlores(cant)
+      sino
+        juntarPapeles(cant)
+      LiberarEsquina(PosAv,PosCa)
+      mover
+    EnviarMensaje(cant, fiscalizador)
+  fin
+  robot jefe
+  variables
+    a, r, a1, a2, r1, r2, quien, equipo: numero
+  comenzar
+    EnviarMensaje(1, R1)
+    EnviarMensaje(2, R2)
+    EnviarMensaje(3, A1)
+    EnviarMensaje(4, A2)
+    RecibirMensaje(a1, A1)
+    RecibirMensaje(a2, A2)
+    RecibirMensaje(r1, R1)
+    RecibirMensaje(r2, R2)
+    a:= a1 + a2
+    r:= r1 + r2
+    si (a > r)
+      equipo:= 1
+    si (r > a)
+      equipo:= 2
+    si (r = a)
+      equipo:= 0
+    Informar(equipo)
+  fin
+variables
+  A1: juntador
+  A2: juntador
+  R1: juntador
+  R2: juntador
+  fiscalizador: jefe
+comenzar
+  AsignarArea(R1, area1)
+  AsignarArea(R2, area2)
+  AsignarArea(A1, area3)
+  AsignarArea(A2, area4)
+  AsignarArea(fiscalizador, areaJ)
+  Iniciar(R1, 2, 1)
+  Iniciar(R2, 3, 1)
+  Iniciar(A1, 1, 98)
+  Iniciar(A2, 1, 99)
+  Iniciar(fiscalizador, 1, 1)
+fin

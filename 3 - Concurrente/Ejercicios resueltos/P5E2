@@ -1,10 +1,4 @@
 programa P5E2
-areas
-  area1: AreaP(1,1,100,1)
-  area2: AreaP(1,2,100,2)
-  area3: AreaP(1,3,100,3)
-  area4: AreaP(1,4,1,4)
-  area5: AreaC(50,50,50,50)
 procesos
   proceso avanzar
   variables
@@ -26,7 +20,7 @@ procesos
     mientras (HayPapelEnLaBolsa)
       depositarPapel
   fin
-  proceso contar (ES papeles, ES flores)
+  proceso contar (ES papeles: numero; ES flores: numero)
   comenzar
     mientras (HayFlorEnLaEsquina)
       tomarFlor
@@ -35,6 +29,12 @@ procesos
       tomarPapel
       papeles:= papeles + 1
   fin
+areas
+  area1: AreaP(1,1,100,1)
+  area2: AreaP(1,2,100,2)
+  area3: AreaP(1,3,100,3)
+  area4: AreaP(1,4,1,4)
+  area5: AreaC(50,50,50,50)
 robots
   robot recolector
   variables
@@ -58,19 +58,38 @@ robots
   variables
     l1,l2, l3, l4, papeles, flores: numero 
   comenzar
-    mientras ~(l1 = 100)
+    mientras (~(l1 = 100) | ~(l2 = 100) | ~(l3 = 100))
       RecibirMensaje(l1, robot1)
       RecibirMensaje(l2, robot2)
       RecibirMensaje(l3, robot3)
-      EnviarMensaje(l1, robot1)
-      EnviarMensaje(l2, robot2)
-      EnviarMensaje(l3, robot3)
+      si ((l1 = 10) & ~(l2 = 10) & ~(l3 = 10))
+        EnviarMensaje(l1, robot1)
+        EnviarMensaje(l2, robot2)
+        EnviarMensaje(l3, robot3)
     BloquearEsquina(50,50)
     Pos(50,50)
     contar(papeles, flores)
     Pos(1, 4)
     LiberarEsquina(50,50)
+    Informar(papeles)
+    Informar(flores)
   fin
 variables
   robot1: recolector
   robot2: recolector
+  robot3: recolector
+  fiscal: fiscalizador
+comenzar
+  AsignarArea(robot1, area1)
+  AsignarArea(robot1, area5)
+  AsignarArea(robot2, area2)
+  AsignarArea(robot2, area5)
+  AsignarArea(robot3, area3)
+  AsignarArea(robot3, area5)
+  AsignarArea(fiscal, area4)
+  AsignarArea(fiscal, area5)
+  Iniciar(robot1, 1, 1)
+  Iniciar(robot2, 1, 2)
+  Iniciar(robot3, 1, 3)
+  Iniciar(fiscal, 1, 4)
+fin

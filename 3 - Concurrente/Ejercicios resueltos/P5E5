@@ -1,0 +1,85 @@
+programa P5E5
+procesos
+  proceso recolectar(E av: numero; ES papeles: numero)
+  comenzar
+    BloquearEsquina(100,1)
+    Pos(100, 1)
+    si (HayPapelEnLaEsquina)
+      tomarPapel
+      papeles:= papeles + 1
+    Pos(av, 1)
+    LiberarEsquina(100,1)
+    si (HayPapelEnLaBolsa)
+      depositarPapel
+  fin
+  proceso depositar(E cant: numero)
+  comenzar
+    repetir cant
+      si (HayPapelEnLaEsquina)
+        tomarPapel
+    BloquearEsquina(100,1)
+    Pos(100,1)
+    repetir cant
+      si (HayPapelEnLaBolsa)
+        depositarPapel
+    Pos(13,1)
+    LiberarEsquina(100,1)
+  fin
+areas
+  area1: AreaP(10,1,10,1)
+  area2: AreaP(11,1,11,1)
+  area3: AreaP(12,1,12,1)
+  areaS: AreaP(13,1,13,1)
+  areaC: AreaC(100,1,100,1)
+robots
+  robot client
+  variables
+    quienSoy, cant, papeles, av: numero
+  comenzar
+    papeles:= 0
+    RecibirMensaje(quienSoy, servidor)
+    av:= 9 + quienSoy
+    repetir 4
+      EnviarMensaje(quienSoy, servidor)
+      RecibirMensaje(cant, servidor)
+      repetir cant
+        recolectar(av, papeles)
+    Informar(papeles)
+  fin
+  robot server
+  variables
+    cod, cant: numero
+  comenzar
+    EnviarMensaje(1, C1)
+    EnviarMensaje(2, C2)
+    EnviarMensaje(3, C3)
+    repetir 12
+      RecibirMensaje(cod, *)
+      Random(cant, 1, 5)
+      depositar(cant)
+      si (cod = 1)
+        EnviarMensaje(cant, C1)
+      si (cod = 2)
+        EnviarMensaje(cant, C2)
+      si (cod = 3)
+        EnviarMensaje(cant, C3)
+  fin
+variables
+  C1: client
+  C2: client
+  C3: client
+  servidor: server
+comenzar
+  AsignarArea(C1, area1)
+  AsignarArea(C1, areaC)
+  AsignarArea(C2, area2)
+  AsignarArea(C2, areaC)
+  AsignarArea(C3, area3)
+  AsignarArea(C3, areaC)
+  AsignarArea(servidor, areaS)
+  AsignarArea(servidor, areaC)
+  Iniciar(C1, 10,1)
+  Iniciar(C2, 11,1)
+  Iniciar(C3, 12,1)
+  Iniciar(servidor, 13,1)
+fin
